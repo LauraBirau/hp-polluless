@@ -1,7 +1,9 @@
 <script>
 	import '../app.css';
-	export const prerender = true;
+	import { injectSpeedInsights } from '@vercel/speed-insights/sveltekit';
 	let { children } = $props();
+
+injectSpeedInsights();
 </script>
 
 {@render children()}
