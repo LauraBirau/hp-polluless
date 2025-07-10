@@ -1,0 +1,1 @@
+<h1>Good choice for the destination</h1>
