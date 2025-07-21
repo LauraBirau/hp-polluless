@@ -3,6 +3,7 @@
 	let { children } = $props();
 
 injectSpeedInsights();
+
 </script>
 
 {@render children()}
