@@ -1,73 +1,94 @@
-<script>
+<script lang='ts'>
 	import { matchedLocations } from '$lib/stores/store.js';
 	import { goto } from '$app/navigation';
+	import { locations } from '$lib/locations.js';
 
-	let answer1 = '';
-	let answer2 = '';
-	let answer3 = '';
+    let destination: string = '';
+    let activities: string[] = [];
+    let duration: string = '';
 
-	const locations = [
-		{ name: 'Amsterdam', group: ['yes', 'red', 'morning'] },
-		{ name: 'Rotterdam', group: ['no', 'blue', 'evening'] },
-		{ name: 'Utrecht', group: ['yes', 'blue', 'morning'] }
+    const activityOptions: string[] = [
+		'beach cleanups',
+		'snorkling/water activities',
+		'stay inside',
+		'something else'
 	];
 
-	function submitForm() {
-		const matched = locations.filter(
-			(loc) => loc.group[0] === answer1 && loc.group[1] === answer2 && loc.group[2] === answer3
-		);
+    const durationOptions: string[] = ['a couple of days', 'entire day', 'a couple of hours'];
 
-		matchedLocations.set(matched);
-		goto('/answer-know-destination');
-	}
+    const destinations: string[] = Array.from(new Set(locations.map((loc) => loc.name)));
+
+    function submitForm() {
+        const matched = locations.filter(
+            (loc) =>
+                loc.name === destination &&
+                activities.some((act) => loc.activities.includes(act)) &&
+                loc.duration.includes(duration)
+        );
+
+        matchedLocations.set(matched);
+        goto('/answer-know-destination');
+    }
 </script>
 
 <div class="w-full h-full p-5 flex flex-col items-center justify-center">
-	<h1 class="text-2xl font-bold mb-4">Know Your Destination!</h1>
+	<h1 class="text-2xl font-bold mb-4">I know where I am going</h1>
 	<p class="text-gray-600 mb-8">
 		Answer the following questions to find out where you should go next.
 	</p>
 	<form on:submit|preventDefault={submitForm} class="max-w-md mx-auto space-y-4">
+		<!-- Question 1: Destination -->
 		<div class="space-y-2">
-			<label class="block text-sm font-medium text-gray-700"> Do you like cities? </label>
+			<label class="block text-sm font-medium text-gray-700">Where are you going?</label>
 			<select
-				bind:value={answer1}
+				bind:value={destination}
 				class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
 			>
 				<option value="" disabled selected hidden> - </option>
-				<option value="yes">Yes</option>
-				<option value="no">No</option>
+				{#each destinations as dest}
+					<option value={dest}>{dest}</option>
+				{/each}
 			</select>
 		</div>
 
+		<!-- Question 2: Activities (multiple choice) -->
 		<div class="space-y-2">
-			<label class="block text-sm font-medium text-gray-700"> Favorite color? </label>
-			<select
-				bind:value={answer2}
-				class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+			<label class="block text-sm font-medium text-gray-700"
+				>What kind of activities do you want to do?</label
 			>
-				<option value="" disabled selected hidden> - </option>
-				<option value="red">Red</option>
-				<option value="blue">Blue</option>
-			</select>
+			{#each activityOptions as act}
+				<div>
+					<input type="checkbox" id={act} value={act} bind:group={activities} class="mr-2" />
+					<label for={act}>{act}</label>
+				</div>
+			{/each}
 		</div>
 
+		<!-- Question 3: Duration (radio buttons) -->
 		<div class="space-y-2">
-			<label class="block text-sm font-medium text-gray-700"> Best time of day? </label>
-			<select
-				bind:value={answer3}
-				class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+			<label class="block text-sm font-medium text-gray-700"
+				>How long are you willing to spend on activities?</label
 			>
-				<option value="" disabled selected hidden> - </option>
-				<option value="morning">Morning</option>
-				<option value="evening">Evening</option>
-			</select>
+			{#each durationOptions as dur}
+				<div>
+					<input
+						type="radio"
+						id={dur}
+						name="duration"
+						value={dur}
+						bind:group={duration}
+						class="mr-2"
+					/>
+					<label for={dur}>{dur}</label>
+				</div>
+			{/each}
 		</div>
 
 		<button
 			type="submit"
 			class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200"
-			>See Matches</button
 		>
+			See Matches
+		</button>
 	</form>
 </div>
