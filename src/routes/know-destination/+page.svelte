@@ -6,6 +6,7 @@
     let destination: string = '';
     let activities: string[] = [];
     let duration: string = '';
+    let showError = false;
 
     const activityOptions: string[] = [
 		'beach cleanups',
@@ -19,6 +20,11 @@
     const destinations: string[] = Array.from(new Set(locations.map((loc) => loc.name)));
 
     function submitForm() {
+        if (!destination || activities.length === 0 || !duration) {
+            showError = true;
+            return;
+        }
+        showError = false;
         const matched = locations.filter(
             (loc) =>
                 loc.name === destination &&
@@ -37,10 +43,12 @@
 		Answer the following questions to find out where you should go next.
 	</p>
 	<form on:submit|preventDefault={submitForm} class="max-w-md mx-auto space-y-4">
+
 		<!-- Question 1: Destination -->
 		<div class="space-y-2">
-			<label class="block text-sm font-medium text-gray-700">Where are you going?</label>
+			<label for="destination" class="block text-sm font-medium text-gray-700">Where are you going?</label>
 			<select
+				id="destination"
 				bind:value={destination}
 				class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
 			>
@@ -53,12 +61,10 @@
 
 		<!-- Question 2: Activities (multiple choice) -->
 		<div class="space-y-2">
-			<label class="block text-sm font-medium text-gray-700"
-				>What kind of activities do you want to do?</label
-			>
+			<span class="block text-sm font-medium text-gray-700">What kind of activities do you want to do?</span>
 			{#each activityOptions as act}
 				<div>
-					<input type="checkbox" id={act} value={act} bind:group={activities} class="mr-2" />
+					<input type="checkbox" id={act} name="activity" value={act} bind:group={activities} class="mr-2" />
 					<label for={act}>{act}</label>
 				</div>
 			{/each}
@@ -66,9 +72,7 @@
 
 		<!-- Question 3: Duration (radio buttons) -->
 		<div class="space-y-2">
-			<label class="block text-sm font-medium text-gray-700"
-				>How long are you willing to spend on activities?</label
-			>
+			<span class="block text-sm font-medium text-gray-700">How long are you willing to spend on activities?</span>
 			{#each durationOptions as dur}
 				<div>
 					<input
@@ -83,6 +87,10 @@
 				</div>
 			{/each}
 		</div>
+		<!-- Error message -->
+		{#if showError}
+			<p class="text-red-600 font-semibold text-center">Please respond to all questions</p>
+		{/if}
 
 		<button
 			type="submit"
