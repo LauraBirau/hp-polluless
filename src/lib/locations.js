@@ -212,7 +212,7 @@ export const locations = [
     organization: 'Grupo Tortuguero',
     activities: ['snorkling/water activities', 'something else'],
     duration: ['entire day', 'a couple of days'],
-    image: 'https://grupotortuguero.org/img/banner-tortuguero.jpg',
+    image: 'https://grupotortuguero.org/wp-content/uploads/2025/02/46-1-1024x497.jpg',
     website: 'https://grupotortuguero.org/'
   }
 ];
