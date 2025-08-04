@@ -1,83 +1,129 @@
-<script lang='ts'>
-    import { matchedLocations } from '$lib/stores/store.js';
-    import { goto } from '$app/navigation';
-    import { locations } from '$lib/locations.js';
+<script lang="ts">
+	import { matchedLocations } from '$lib/stores/store.js';
+	import { goto } from '$app/navigation';
+	import { locations } from '$lib/locations.js';
 
-    let activities: string[] = [];
-    let duration: string = '';
-    let showError = false;
+	let activities: string[] = [];
+	let duration: string = '';
+	let showError = false;
 
-    const activityOptions: string[] = [
-        'beach cleanups',
-        'snorkling/water activities',
-        'stay inside',
-        'something else'
-    ];
+	const activityOptions: string[] = [
+		'beach cleanups',
+		'snorkling/water activities',
+		'stay inside',
+		'something else'
+	];
 
-    const durationOptions: string[] = ['a couple of days', 'entire day', 'a couple of hours'];
+	const durationOptions: string[] = ['a couple of days', 'entire day', 'a couple of hours'];
 
-    function submitForm() {
-        if (activities.length === 0 || !duration) {
-            showError = true;
-            return;
-        }
-        showError = false;
-        const matched = locations.filter(
-            (loc) =>
-                activities.some((act) => loc.activities.includes(act)) &&
-                loc.duration.includes(duration)
-        );
+	function submitForm() {
+		if (activities.length === 0 || !duration) {
+			showError = true;
+			return;
+		}
+		showError = false;
+		const matched = locations.filter(
+			(loc) =>
+				activities.some((act) => loc.activities.includes(act)) && loc.duration.includes(duration)
+		);
 
-        matchedLocations.set(matched);
-        goto('/answer-new-experience');
-    }
+		matchedLocations.set(matched);
+		goto('/answer-new-experience');
+	}
 </script>
 
-<div class="w-full h-full p-5 flex flex-col items-center justify-center">
-    <h1 class="text-2xl font-bold mb-4">Find Your Experience</h1>
-    <p class="text-gray-600 mb-8">
-        Answer the following questions to find out which organizations match your interests.
-    </p>
-    <form on:submit|preventDefault={submitForm} class="max-w-md mx-auto space-y-4">
-        <!-- Error message -->
-        {#if showError}
-            <p class="text-red-600 font-semibold text-center">Please respond to all questions</p>
-        {/if}
+<div class="w-full lg:w-[65rem] h-20 flex flex-col items-start gap-6">
+	<h1 class="text-4xl limelight-head">Find Your Experience</h1>
+	<p class="inconsolata-p text-md">
+		Answer the following questions to find out which organizations match your interests.
+	</p>
+	<form
+		on:submit|preventDefault={submitForm}
+		class="w-full lg:w-[65rem] flex flex-col gap-4 items-start"
+	>
+		<!-- Activities (multiple choice) -->
+		<div class="space-y-2">
+			<span class="block text-md font-bold inconsolata-p"
+				>What kind of activities do you want to do?</span
+			>
+			{#each activityOptions as act}
+				<div>
+					<input
+						type="checkbox"
+						id={act}
+						name="activity"
+						value={act}
+						bind:group={activities}
+						class="mr-2"
+					/>
+					<label for={act} class="inconsolata-p">{act}</label>
+				</div>
+			{/each}
+		</div>
 
-        <!-- Activities (multiple choice) -->
-        <div class="space-y-2">
-            <span class="block text-sm font-medium text-gray-700">What kind of activities do you want to do?</span>
-            {#each activityOptions as act}
-                <div>
-                    <input type="checkbox" id={act} name="activity" value={act} bind:group={activities} class="mr-2" />
-                    <label for={act}>{act}</label>
-                </div>
-            {/each}
-        </div>
+		<!-- Duration (radio buttons) -->
+		<div class="space-y-2">
+			<span class="block text-md font-bold inconsolata-p"
+				>How long are you willing to spend on activities?</span
+			>
+			{#each durationOptions as dur}
+				<div>
+					<input
+						type="radio"
+						id={dur}
+						name="duration"
+						value={dur}
+						bind:group={duration}
+						class="mr-2"
+					/>
+					<label for={dur} class="inconsolata-p">{dur}</label>
+				</div>
+			{/each}
+		</div>
 
-        <!-- Duration (radio buttons) -->
-        <div class="space-y-2">
-            <span class="block text-sm font-medium text-gray-700">How long are you willing to spend on activities?</span>
-            {#each durationOptions as dur}
-                <div>
-                    <input
-                        type="radio"
-                        id={dur}
-                        name="duration"
-                        value={dur}
-                        bind:group={duration}
-                        class="mr-2"
-                    />
-                    <label for={dur}>{dur}</label>
-                </div>
-            {/each}
-        </div>
+		{#if showError}
+			<p class="text-red-600 font-semibold text-center inconsolata-font">
+				Please respond to all questions
+			</p>
+		{/if}
 
-        <button
-            type="submit"
-            class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200"
-        >
-            See Matches
-        </button>
-    </form>
+		<div class="w-full h-auto flex flex-col lg:flex-row mt-6 gap-2">
+			<button
+				type="submit"
+				class="yellowish w-full lg:w-1/2 p-4 text-center border-black border rounded-xl limelight-head text-2xl"
+			>
+				See Matches
+			</button>
+			<a
+				href="/"
+				class="bg-red-300 hover:bg-red-400 text-white w-full lg:w-1/4 p-4 text-center border-black border rounded-xl limelight-head text-2xl"
+			>
+				Cancel
+			</a>
+		</div>
+	</form>
 </div>
+
+<style>
+	.limelight-head {
+		font-family: Limelight;
+		font-style: normal;
+		font-variant: small-caps;
+		font-weight: 100;
+		line-height: 26.4px;
+		color: #413620;
+	}
+	.inconsolata-p {
+		font-family: 'Inconsolata';
+		color: #413620;
+	}
+	.yellowish {
+		background-color: #ffe586;
+	}
+	.yellowish:hover {
+		background-color: #edd168;
+	}
+	.inconsolata-font {
+		font-family: 'Inconsolata';
+	}
+</style>

@@ -33,13 +33,16 @@
 				{#if results.length}
 					<!-- Show country message -->
 					<p class="mb-4 text-gray-700">
-						{results[0].name} is such a good choice! We hope you enjoy the beautiful destination.<br />
+						{results[0].name} is such a good choice! We hope you enjoy the beautiful destination.<br
+						/>
 						On the side of your holiday (or as the main goal of the trip) you can check out the following
 						organizations:
 					</p>
 					<ul class="space-y-3 flex flex-col items-center justify-center">
 						{#each results as loc}
-							<li class="bg-white border border-gray-200 rounded-md p-4 shadow-sm w-full flex flex-col items-center">
+							<li
+								class="bg-white border border-gray-200 rounded-md p-4 shadow-sm w-full flex flex-col items-center"
+							>
 								<span class="font-medium text-gray-900 mb-2">{loc.organization}</span>
 								{#if loc.image}
 									<img
@@ -50,7 +53,11 @@
 								{/if}
 								{#if loc.website}
 									<p class="text-sm text-gray-700 mt-2">
-										Learn more at <a href={loc.website} target="_blank" class="text-blue-600 underline">{loc.organization}</a>
+										Learn more at <a
+											href={loc.website}
+											target="_blank"
+											class="text-blue-600 underline">{loc.organization}</a
+										>
 									</p>
 								{/if}
 							</li>
@@ -94,3 +101,24 @@
 		</div>
 	{/if}
 </div>
+
+<style>
+	.limelight-head {
+		font-family: Limelight;
+		font-style: normal;
+		font-variant: small-caps;
+		font-weight: 100;
+		line-height: 26.4px;
+		color: #413620;
+	}
+	.inconsolata-p {
+		font-family: 'Inconsolata';
+		color: #413620;
+	}
+	.yellowish {
+		background-color: #ffe586;
+	}
+	.yellowish:hover {
+		background-color: #edd168;
+	}
+</style>
