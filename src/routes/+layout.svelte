@@ -7,29 +7,45 @@
 	injectSpeedInsights();
 </script>
 
-<!-- Navigator-->
-
-<div class="w-full h-auto m-auto p-4 custom flex justify-center bg-olive">
-	<Nav />
-</div>
-<div class="bg-olive w-full h-lvh p-4 flex flex-col items-center">
-	<div class="w-full h-full m-auto p-4 custom flex justify-center">
-		{@render children()}
-	</div>
-	<div class="w-full lg:w-[65rem] h-30">
-		<div class="inconsolata w-full rounded-xl p-4 text-center">HP PolluLess 2025.</div>
+<div class="polka w-full min-h-screen p-4">
+	<div class="w-full h-auto flex flex-col items-center">
+		<Nav />
+		<div class="w-full h-auto m-auto p-4 custom flex justify-center">
+			{@render children()}
+		</div>
+		<div class="inconsolata w-full h-20 p-4 flex flex-row justify-center items-center gap-2">
+			<p>HP PolluLess 2025.</p>
+			<a href="/" aria-label="Home">
+				<svg
+					class="w-10 h-10 brownish"
+					aria-hidden="true"
+					xmlns="http://www.w3.org/2000/svg"
+					width="24"
+					height="24"
+					fill="none"
+					viewBox="0 0 24 24"
+				>
+					<path
+						fill="currentColor"
+						fill-rule="evenodd"
+						d="M3 8a5 5 0 0 1 5-5h8a5 5 0 0 1 5 5v8a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5V8Zm5-3a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V8a3 3 0 0 0-3-3H8Zm7.597 2.214a1 1 0 0 1 1-1h.01a1 1 0 1 1 0 2h-.01a1 1 0 0 1-1-1ZM12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm-5 3a5 5 0 1 1 10 0 5 5 0 0 1-10 0Z"
+						clip-rule="evenodd"
+					/>
+				</svg>
+			</a>
+		</div>
 	</div>
 </div>
 
 <style>
-	.bg-olive {
-		background-color: #c9e3ac;
-	}
-
-	.yellowish {
-		background-color: #ffe586;
-	}
 	.inconsolata {
 		font-family: 'Inconsolata';
+		color: #413620;
+	}
+	.polka {
+		background-color: #c9e3ac;
+		opacity: 0.8;
+		background-image: radial-gradient(#90be6d 0.5px, #c9e3ac 0.5px);
+		background-size: 10px 10px;
 	}
 </style>

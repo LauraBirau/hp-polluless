@@ -1,5 +1,5 @@
-<div class="w-full lg:w-[65rem] h-20 flex flex-col items-start gap-6">
-	<h1 class="text-4xl limelight-head">Home</h1>
+<div class="w-full lg:w-[65rem] h-auto flex flex-col items-start gap-6">
+	<h1 class="text-4xl limelight-head blured">Home</h1>
 	<p class="inconsolata-p text-md">
 		We are two students from HZ University of Applied Sciences in the Netherlands, currently working
 		on our Honours Program project. Our goal is to create a web application that helps users
@@ -12,12 +12,12 @@
 	<div class="w-full h-auto flex flex-col lg:flex-row gap-2">
 		<a
 			href="/know-destination"
-			class="yellowish w-full lg:w-1/2 p-4 text-center border-black border rounded-xl limelight-head text-2xl"
+			class="yellowish w-full lg:w-1/2 p-4 text-center border-black border rounded-xl limelight-head text-2xl hover:duration-200"
 			>I Know Where I Am Going</a
 		>
 		<a
 			href="/new-experience"
-			class="yellowish w-full lg:w-1/2 p-4 text-center border-black border rounded-xl limelight-head text-2xl"
+			class="yellowish w-full lg:w-1/2 p-4 text-center border-black border rounded-xl limelight-head text-2xl hover:duration-200 block"
 			>I Want New Experience</a
 		>
 	</div>

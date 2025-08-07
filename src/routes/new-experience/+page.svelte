@@ -32,7 +32,7 @@
 	}
 </script>
 
-<div class="w-full lg:w-[65rem] h-20 flex flex-col items-start gap-6">
+<div class="w-full lg:w-[65rem] h-auto flex flex-col items-start gap-6">
 	<h1 class="text-4xl limelight-head">Find Your Experience</h1>
 	<p class="inconsolata-p text-md">
 		Answer the following questions to find out which organizations match your interests.
@@ -90,13 +90,13 @@
 		<div class="w-full h-auto flex flex-col lg:flex-row mt-6 gap-2">
 			<button
 				type="submit"
-				class="yellowish w-full lg:w-1/2 p-4 text-center border-black border rounded-xl limelight-head text-2xl"
+				class="yellowish w-full lg:w-1/2 p-4 text-center border-black border rounded-xl limelight-head text-2xl duration-200"
 			>
 				See Matches
 			</button>
 			<a
 				href="/"
-				class="bg-red-300 hover:bg-red-400 text-white w-full lg:w-1/4 p-4 text-center border-black border rounded-xl limelight-head text-2xl"
+				class="bg-red-300 hover:bg-red-400 text-white w-full lg:w-1/4 p-4 text-center border-black border rounded-xl limelight-head text-2xl duration-200"
 			>
 				Cancel
 			</a>

@@ -37,7 +37,7 @@
 	}
 </script>
 
-<div class="w-full lg:w-[65rem] h-20 flex flex-col items-start gap-6">
+<div class="w-full lg:w-[65rem] h-auto flex flex-col items-start gap-6">
 	<h1 class="text-4xl limelight-head">I know where I am going</h1>
 	<p class="inconsolata-p text-md">
 		Answer the following questions to find out where you should go next.
