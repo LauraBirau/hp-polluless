@@ -1,56 +1,57 @@
-<script lang='ts'>
+<script lang="ts">
 	import { matchedLocations } from '$lib/stores/store.js';
 	import { goto } from '$app/navigation';
 	import { locations } from '$lib/locations.js';
 
-    let destination: string = '';
-    let activities: string[] = [];
-    let duration: string = '';
-    let showError = false;
+	let destination: string = '';
+	let activities: string[] = [];
+	let duration: string = '';
+	let showError = false;
 
-    const activityOptions: string[] = [
+	const activityOptions: string[] = [
 		'beach cleanups',
 		'snorkling/water activities',
 		'stay inside',
 		'something else'
 	];
 
-    const durationOptions: string[] = ['a couple of days', 'entire day', 'a couple of hours'];
+	const durationOptions: string[] = ['a couple of days', 'entire day', 'a couple of hours'];
 
-    const destinations: string[] = Array.from(new Set(locations.map((loc) => loc.name)));
+	const destinations: string[] = Array.from(new Set(locations.map((loc) => loc.name)));
 
-    function submitForm() {
-        if (!destination || activities.length === 0 || !duration) {
-            showError = true;
-            return;
-        }
-        showError = false;
-        const matched = locations.filter(
-            (loc) =>
-                loc.name === destination &&
-                activities.some((act) => loc.activities.includes(act)) &&
-                loc.duration.includes(duration)
-        );
+	function submitForm() {
+		if (!destination || activities.length === 0 || !duration) {
+			showError = true;
+			return;
+		}
+		showError = false;
+		const matched = locations.filter(
+			(loc) =>
+				loc.name === destination &&
+				activities.some((act) => loc.activities.includes(act)) &&
+				loc.duration.includes(duration)
+		);
 
-        matchedLocations.set(matched);
-        goto('/answer-know-destination');
-    }
+		matchedLocations.set(matched);
+		goto('/answer-know-destination');
+	}
 </script>
 
-<div class="w-full h-full p-5 flex flex-col items-center justify-center">
-	<h1 class="text-2xl font-bold mb-4">I know where I am going</h1>
-	<p class="text-gray-600 mb-8">
+<div class="w-full h-auto flex flex-col items-start gap-6">
+	<h1 class="text-4xl limelight-head">I know where I am going</h1>
+	<p class="inconsolata-p text-md">
 		Answer the following questions to find out where you should go next.
 	</p>
-	<form on:submit|preventDefault={submitForm} class="max-w-md mx-auto space-y-4">
-
+	<form on:submit|preventDefault={submitForm} class="w-full flex flex-col gap-4 items-start">
 		<!-- Question 1: Destination -->
-		<div class="space-y-2">
-			<label for="destination" class="block text-sm font-medium text-gray-700">Where are you going?</label>
+		<div class="w-full flex flex-col gap-1 justify-start">
+			<label for="destination" class="block text-md font-bold inconsolata-p"
+				>Where are you going?</label
+			>
 			<select
 				id="destination"
 				bind:value={destination}
-				class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+				class="w-full lg:w-1/2 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500-500 focus:border-transparent"
 			>
 				<option value="" disabled selected hidden> - </option>
 				{#each destinations as dest}
@@ -61,18 +62,29 @@
 
 		<!-- Question 2: Activities (multiple choice) -->
 		<div class="space-y-2">
-			<span class="block text-sm font-medium text-gray-700">What kind of activities do you want to do?</span>
+			<span class="block text-md font-bold inconsolata-p"
+				>What kind of activities do you want to do?</span
+			>
 			{#each activityOptions as act}
 				<div>
-					<input type="checkbox" id={act} name="activity" value={act} bind:group={activities} class="mr-2" />
-					<label for={act}>{act}</label>
+					<input
+						type="checkbox"
+						id={act}
+						name="activity"
+						value={act}
+						bind:group={activities}
+						class="mr-2"
+					/>
+					<label for={act} class="inconsolata-p">{act}</label>
 				</div>
 			{/each}
 		</div>
 
 		<!-- Question 3: Duration (radio buttons) -->
 		<div class="space-y-2">
-			<span class="block text-sm font-medium text-gray-700">How long are you willing to spend on activities?</span>
+			<span class="block text-md font-bold inconsolata-p"
+				>How long are you willing to spend on activities?</span
+			>
 			{#each durationOptions as dur}
 				<div>
 					<input
@@ -83,20 +95,54 @@
 						bind:group={duration}
 						class="mr-2"
 					/>
-					<label for={dur}>{dur}</label>
+					<label for={dur} class="inconsolata-p">{dur}</label>
 				</div>
 			{/each}
 		</div>
 		<!-- Error message -->
 		{#if showError}
-			<p class="text-red-600 font-semibold text-center">Please respond to all questions</p>
+			<p class="text-red-600 font-semibold text-center inconsolata-font">
+				Please respond to all questions
+			</p>
 		{/if}
 
-		<button
-			type="submit"
-			class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200"
-		>
-			See Matches
-		</button>
+		<div class="h-auto flex flex-col md:flex-row mt-6 gap-2">
+			<button
+				type="submit"
+				class="yellowish p-4 text-center border-black border rounded-xl limelight-head text-2xl duration-200"
+			>
+				See Matches
+			</button>
+			<a
+				href="/"
+				class="bg-red-300 hover:bg-red-400 text-white p-4 text-center border-black border rounded-xl limelight-head text-2xl duration-200"
+			>
+				Cancel
+			</a>
+		</div>
 	</form>
 </div>
+
+<style>
+	.limelight-head {
+		font-family: Limelight;
+		font-style: normal;
+		font-variant: small-caps;
+		font-weight: 100;
+		line-height: 26.4px;
+		color: #413620;
+	}
+	.inconsolata-p {
+		font-family: 'Inconsolata';
+		color: #413620;
+	}
+	.yellowish {
+		background-color: #ffe586;
+	}
+	.yellowish:hover {
+		background-color: #edd168;
+	}
+	.inconsolata-font {
+		font-family: 'Inconsolata';
+	}
+</style>
