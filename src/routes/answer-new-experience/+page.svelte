@@ -18,7 +18,7 @@
 	});
 </script>
 
-<div class="w-full lg:w-[65rem] h-auto flex flex-col items-start gap-2">
+<div class="w-full h-auto flex flex-col items-start gap-2">
 	{#if results.length}
 		<div class="max-w-md mx-auto">
 			<div class="p-6">

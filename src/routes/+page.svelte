@@ -1,4 +1,4 @@
-<div class="w-full lg:w-[65rem] h-auto flex flex-col items-start gap-6">
+<div class="w-full h-auto flex flex-col items-start gap-6">
 	<h1 class="text-4xl limelight-head blured">Home</h1>
 	<p class="inconsolata-p text-md">
 		We are two students from HZ University of Applied Sciences in the Netherlands, currently working
